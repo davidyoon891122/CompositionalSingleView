@@ -54,14 +54,30 @@
 		491276202A4EA8E900589EED /* CompositionalSingleViewApp */ = {
 			isa = PBXGroup;
 			children = (
+				491276352A4EA98300589EED /* Delegate */,
+				491276252A4EA8E900589EED /* ViewController.swift */,
+				491276362A4EA98C00589EED /* Resource */,
+			);
+			path = CompositionalSingleViewApp;
+			sourceTree = "<group>";
+		};
+		491276352A4EA98300589EED /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
 				491276212A4EA8E900589EED /* AppDelegate.swift */,
 				491276232A4EA8E900589EED /* SceneDelegate.swift */,
-				491276252A4EA8E900589EED /* ViewController.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		491276362A4EA98C00589EED /* Resource */ = {
+			isa = PBXGroup;
+			children = (
 				4912762A2A4EA8EB00589EED /* Assets.xcassets */,
 				4912762C2A4EA8EB00589EED /* LaunchScreen.storyboard */,
 				4912762F2A4EA8EB00589EED /* Info.plist */,
 			);
-			path = CompositionalSingleViewApp;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,7 +293,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HDFLLXK789;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CompositionalSingleViewApp/Info.plist;
+				INFOPLIST_FILE = CompositionalSingleViewApp/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -305,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HDFLLXK789;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CompositionalSingleViewApp/Info.plist;
+				INFOPLIST_FILE = CompositionalSingleViewApp/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
