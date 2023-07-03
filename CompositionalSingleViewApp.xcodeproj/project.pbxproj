@@ -19,6 +19,7 @@
 		49296DD02A52519500F5FEA6 /* TickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49296DCF2A52519500F5FEA6 /* TickerModel.swift */; };
 		49296DD22A527A2000F5FEA6 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49296DD12A527A2000F5FEA6 /* MainTabbarController.swift */; };
 		49296DD42A527A8800F5FEA6 /* TabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49296DD32A527A8800F5FEA6 /* TabbarItem.swift */; };
+		49296DDA2A52979100F5FEA6 /* BannerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49296DD92A52979100F5FEA6 /* BannerHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		49296DCF2A52519500F5FEA6 /* TickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerModel.swift; sourceTree = "<group>"; };
 		49296DD12A527A2000F5FEA6 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		49296DD32A527A8800F5FEA6 /* TabbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarItem.swift; sourceTree = "<group>"; };
+		49296DD92A52979100F5FEA6 /* BannerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				491276252A4EA8E900589EED /* HomeViewController.swift */,
 				4912763B2A4EB2E800589EED /* BannerCell.swift */,
 				4912763D2A4EBEBF00589EED /* TickerCell.swift */,
+				49296DD92A52979100F5FEA6 /* BannerHeaderView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				49296DD02A52519500F5FEA6 /* TickerModel.swift in Sources */,
 				491276262A4EA8E900589EED /* HomeViewController.swift in Sources */,
 				49296DD22A527A2000F5FEA6 /* MainTabbarController.swift in Sources */,
+				49296DDA2A52979100F5FEA6 /* BannerHeaderView.swift in Sources */,
 				4912763C2A4EB2E800589EED /* BannerCell.swift in Sources */,
 				49296DD42A527A8800F5FEA6 /* TabbarItem.swift in Sources */,
 				491276222A4EA8E900589EED /* AppDelegate.swift in Sources */,

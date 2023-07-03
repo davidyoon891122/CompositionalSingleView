@@ -23,8 +23,22 @@ class HomeViewController: UIViewController {
         let layout = createLayout()
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
-        collectionView.register(TickerCell.self, forCellWithReuseIdentifier: TickerCell.identifier)
+        
+        collectionView.register(
+            BannerHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: BannerHeaderView.identifier
+        )
+        
+        collectionView.register(
+            BannerCell.self,
+            forCellWithReuseIdentifier: BannerCell.identifier
+        )
+        
+        collectionView.register(
+            TickerCell.self,
+            forCellWithReuseIdentifier: TickerCell.identifier
+        )
         
         return collectionView
     }()
@@ -60,6 +74,8 @@ private extension HomeViewController {
         
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, layoutEnvironment in
             if sectionIndex == 0 {
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
@@ -67,6 +83,8 @@ private extension HomeViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
+                
+                section.boundarySupplementaryItems = [header]
                 
                 section.orthogonalScrollingBehavior = .groupPagingCentered
                 
@@ -115,6 +133,22 @@ private extension HomeViewController {
                 return UICollectionViewCell()
             }
         })
+        
+        datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
+            if indexPath.section == 0 {
+                if kind == UICollectionView.elementKindSectionHeader {
+                    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BannerHeaderView.identifier, for: indexPath) as? BannerHeaderView else { return nil }
+                    
+                    return headerView
+                } else {
+                    return nil
+                }
+            } else {
+                return nil
+            }
+            
+        }
+        
         
         applySnapshot()
         
