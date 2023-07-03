@@ -36,6 +36,12 @@ class HomeViewController: UIViewController {
         )
         
         collectionView.register(
+            TickerHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TickerHeaderView.identifier
+        )
+        
+        collectionView.register(
             TickerCell.self,
             forCellWithReuseIdentifier: TickerCell.identifier
         )
@@ -90,6 +96,8 @@ private extension HomeViewController {
                 
                 return section
             } else if sectionIndex == 1 {
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
@@ -97,6 +105,7 @@ private extension HomeViewController {
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [header]
                 
                 return section
             } else {
@@ -143,15 +152,20 @@ private extension HomeViewController {
                 } else {
                     return nil
                 }
+            } else if indexPath.section == 1 {
+                if kind == UICollectionView.elementKindSectionHeader {
+                    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TickerHeaderView.identifier, for: indexPath) as? TickerHeaderView else { return nil }
+                    
+                    return headerView
+                } else {
+                    return nil
+                }
             } else {
                 return nil
             }
             
         }
-        
-        
         applySnapshot()
-        
     }
     
     func applySnapshot() {

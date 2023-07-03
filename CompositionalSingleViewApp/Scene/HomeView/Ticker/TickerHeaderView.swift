@@ -1,19 +1,19 @@
 //
-//  BannerHeaderView.swift
+//  TickerHeaderView.swift
 //  CompositionalSingleViewApp
 //
-//  Created by jiwon Yoon on 2023/07/03.
+//  Created by jiwon Yoon on 2023/07/04.
 //
 
 import UIKit
 import SnapKit
 
-final class BannerHeaderView: UICollectionReusableView {
-    static let identifier = "BannerHeaderView"
+final class TickerHeaderView: UICollectionReusableView {
+    static let identifier = "TickerHeaderView"
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Banner"
+        label.text = "Ticker"
         label.font = .systemFont(ofSize: 22.0, weight: .bold)
         
         return label
@@ -21,6 +21,7 @@ final class BannerHeaderView: UICollectionReusableView {
     
     private lazy var containerView: UIView = {
         let view = UIView()
+        view.backgroundColor = .secondarySystemBackground
         [
             titleLabel
         ]
@@ -36,6 +37,7 @@ final class BannerHeaderView: UICollectionReusableView {
         return view
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -46,8 +48,9 @@ final class BannerHeaderView: UICollectionReusableView {
     }
 }
 
-private extension BannerHeaderView {
+private extension TickerHeaderView {
     func setupViews() {
+        backgroundColor = .systemBackground
         [
             containerView
         ]
