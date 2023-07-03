@@ -8,6 +8,16 @@
 import UIKit
 import SnapKit
 
+enum SectionType {
+    case banner
+    case ticker
+}
+
+struct Section {
+    let type: SectionType
+    var items: [AnyHashable]
+}
+
 class ViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
@@ -15,11 +25,12 @@ class ViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
+        collectionView.register(TickerCell.self, forCellWithReuseIdentifier: TickerCell.identifier)
         
         return collectionView
     }()
 
-    private var datasource: UICollectionViewDiffableDataSource<Int, Int>!
+    private var datasource: UICollectionViewDiffableDataSource<SectionType, AnyHashable>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +67,18 @@ private extension ViewController {
                 section.orthogonalScrollingBehavior = .groupPagingCentered
                 
                 return section
+            } else if sectionIndex == 1 {
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                
+                let section = NSCollectionLayoutSection(group: group)
+                
+//                section.orthogonalScrollingBehavior = .groupPagingCentered
+                
+                return section
             } else {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -73,9 +96,22 @@ private extension ViewController {
     }
     
     func configureDatasource() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier, for: indexPath) as? BannerCell else { return UICollectionViewCell() }
-            return cell
+        datasource = UICollectionViewDiffableDataSource<SectionType, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+            if let bannerModel = item as? BannerModel {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier, for: indexPath) as? BannerCell else { return UICollectionViewCell() }
+                
+                cell.setupCell(bannerModel: bannerModel)
+                
+                return cell
+            } else if let tickerModel = item as? TickerModel {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TickerCell.identifier, for: indexPath) as? TickerCell else { return UICollectionViewCell() }
+                
+                cell.setupCell(tickerModel: tickerModel)
+                
+                return cell
+            } else {
+                return UICollectionViewCell()
+            }
         })
         
         applySnapshot()
@@ -83,9 +119,10 @@ private extension ViewController {
     }
     
     func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
-        snapshot.appendSections([0])
-        snapshot.appendItems([0, 1, 2])
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, AnyHashable>()
+        snapshot.appendSections([.banner, .ticker])
+        snapshot.appendItems(BannerModel.items, toSection: .banner)
+        snapshot.appendItems(TickerModel.items, toSection: .ticker)
         
         datasource.apply(snapshot, animatingDifferences: true)
     }

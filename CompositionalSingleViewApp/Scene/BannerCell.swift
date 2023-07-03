@@ -67,6 +67,11 @@ final class BannerCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setupCell(bannerModel: BannerModel) {
+        bannerImageView.image = UIImage(systemName: bannerModel.imageName)
+        titleLabel.text = bannerModel.title
+    }
 }
 
 private extension BannerCell {
