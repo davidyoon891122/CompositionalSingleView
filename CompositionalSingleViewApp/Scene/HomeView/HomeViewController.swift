@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  CompositionalSingleViewApp
 //
 //  Created by jiwon Yoon on 2023/06/30.
@@ -18,8 +18,7 @@ struct Section {
     var items: [AnyHashable]
 }
 
-class ViewController: UIViewController {
-    
+class HomeViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = createLayout()
         
@@ -39,7 +38,7 @@ class ViewController: UIViewController {
     }
 }
 
-private extension ViewController {
+private extension HomeViewController {
     func setupViews() {
         [
             collectionView
@@ -75,8 +74,6 @@ private extension ViewController {
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
-                
-//                section.orthogonalScrollingBehavior = .groupPagingCentered
                 
                 return section
             } else {
