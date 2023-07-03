@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         configureDatasource()
+        configureNaivigation()
     }
 }
 
@@ -48,11 +49,15 @@ private extension HomeViewController {
             }
         
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.interSectionSpacing = 10
+        
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, layoutEnvironment in
             if sectionIndex == 0 {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
@@ -87,7 +92,7 @@ private extension HomeViewController {
                 
                 return section
             }
-        })
+        }, configuration: configuration)
         
         return layout
     }
@@ -122,6 +127,10 @@ private extension HomeViewController {
         snapshot.appendItems(TickerModel.items, toSection: .ticker)
         
         datasource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func configureNaivigation() {
+        navigationItem.title = "Home"
     }
 }
 
