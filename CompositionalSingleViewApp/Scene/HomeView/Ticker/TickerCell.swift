@@ -28,13 +28,16 @@ final class TickerCell: UICollectionViewCell {
         return label
     }()
     
+    private let separatorView = SeparatorView(color: .lightGray.withAlphaComponent(0.4))
+    
     private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
         
         [
             titleLabel,
-            priceLabel
+            priceLabel,
+            separatorView
         ]
             .forEach {
                 view.addSubview($0)
@@ -54,6 +57,12 @@ final class TickerCell: UICollectionViewCell {
         }
         
         priceLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        separatorView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(offset)
+            $0.trailing.equalToSuperview().offset(-offset)
+            $0.bottom.equalToSuperview()
+        }
     
         return view
     }()
@@ -69,7 +78,7 @@ final class TickerCell: UICollectionViewCell {
     
     func setupCell(tickerModel: TickerModel) {
         titleLabel.text = tickerModel.title
-        priceLabel.text = String(format: "%f.4",tickerModel.price)
+        priceLabel.text = String(format: "%0.4f",tickerModel.price)
     }
 }
 

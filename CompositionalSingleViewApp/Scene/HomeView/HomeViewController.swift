@@ -54,6 +54,8 @@ class HomeViewController: UIViewController {
             forCellWithReuseIdentifier: NewsCell.identifier
         )
         
+        collectionView.delegate = self
+        
         return collectionView
     }()
 
@@ -64,6 +66,12 @@ class HomeViewController: UIViewController {
         setupViews()
         configureDatasource()
         configureNaivigation()
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
 

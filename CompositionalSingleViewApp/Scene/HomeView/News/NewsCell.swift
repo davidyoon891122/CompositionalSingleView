@@ -18,14 +18,14 @@ final class NewsCell: UICollectionViewCell {
         return label
     }()
     
-    private let separatorView = SeparatorView()
+    private let separatorView = SeparatorView(color: .lightGray.withAlphaComponent(0.4))
     
     private lazy var containerView: UIView = {
         let view = UIView()
         
         [
-            titleLabel,separatorView
-            
+            titleLabel,
+            separatorView
         ]
             .forEach {
                 view.addSubview($0)

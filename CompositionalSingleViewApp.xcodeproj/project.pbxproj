@@ -112,7 +112,7 @@
 			children = (
 				49296DD52A527CC900F5FEA6 /* MainTabbar */,
 				49296DD62A527CD600F5FEA6 /* HomeView */,
-				498AF81E2A53C85500121427 /* SeparatorView.swift */,
+				498AF8222A53F81200121427 /* CustomView */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -172,6 +172,14 @@
 				498AF8202A53CC9900121427 /* NewsHeaderView.swift */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		498AF8222A53F81200121427 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				498AF81E2A53C85500121427 /* SeparatorView.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
