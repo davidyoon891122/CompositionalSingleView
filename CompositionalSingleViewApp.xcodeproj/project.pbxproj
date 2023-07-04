@@ -24,6 +24,7 @@
 		498AF8172A53927700121427 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498AF8162A53927700121427 /* NewsCell.swift */; };
 		498AF81B2A53C36900121427 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498AF81A2A53C36900121427 /* NewsModel.swift */; };
 		498AF81F2A53C85500121427 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498AF81E2A53C85500121427 /* SeparatorView.swift */; };
+		498AF8212A53CC9900121427 /* NewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498AF8202A53CC9900121427 /* NewsHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		498AF8162A53927700121427 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		498AF81A2A53C36900121427 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		498AF81E2A53C85500121427 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		498AF8202A53CC9900121427 /* NewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				498AF8162A53927700121427 /* NewsCell.swift */,
+				498AF8202A53CC9900121427 /* NewsHeaderView.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				498AF8142A538C2B00121427 /* TickerHeaderView.swift in Sources */,
 				49296DCD2A52512300F5FEA6 /* BannerModel.swift in Sources */,
 				498AF81B2A53C36900121427 /* NewsModel.swift in Sources */,
+				498AF8212A53CC9900121427 /* NewsHeaderView.swift in Sources */,
 				498AF81F2A53C85500121427 /* SeparatorView.swift in Sources */,
 				491276242A4EA8E900589EED /* SceneDelegate.swift in Sources */,
 				498AF8172A53927700121427 /* NewsCell.swift in Sources */,

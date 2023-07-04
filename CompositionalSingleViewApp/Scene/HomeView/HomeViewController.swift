@@ -47,6 +47,8 @@ class HomeViewController: UIViewController {
             forCellWithReuseIdentifier: TickerCell.identifier
         )
         
+        collectionView.register(NewsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NewsHeaderView.identifier)
+        
         collectionView.register(
             NewsCell.self,
             forCellWithReuseIdentifier: NewsCell.identifier
@@ -115,7 +117,7 @@ private extension HomeViewController {
                 
                 return section
             } else if sectionIndex == 2 {
-//                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(40))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -124,7 +126,7 @@ private extension HomeViewController {
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
-//                section.boundarySupplementaryItems = [header]
+                section.boundarySupplementaryItems = [header]
                 
                 return section
             } else {
@@ -185,7 +187,14 @@ private extension HomeViewController {
                 } else {
                     return nil
                 }
-            } else {
+            } else if indexPath.section == 2 {
+                if kind == UICollectionView.elementKindSectionHeader {
+                    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NewsHeaderView.identifier, for: indexPath) as? NewsHeaderView else { return nil }
+                    return headerView
+                } else {
+                     return nil
+                }
+            }  else {
                 return nil
             }
             
