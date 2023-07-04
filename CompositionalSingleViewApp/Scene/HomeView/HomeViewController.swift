@@ -11,6 +11,7 @@ import SnapKit
 enum SectionType {
     case banner
     case ticker
+    case news
 }
 
 struct Section {
@@ -44,6 +45,11 @@ class HomeViewController: UIViewController {
         collectionView.register(
             TickerCell.self,
             forCellWithReuseIdentifier: TickerCell.identifier
+        )
+        
+        collectionView.register(
+            NewsCell.self,
+            forCellWithReuseIdentifier: NewsCell.identifier
         )
         
         return collectionView
@@ -108,6 +114,19 @@ private extension HomeViewController {
                 section.boundarySupplementaryItems = [header]
                 
                 return section
+            } else if sectionIndex == 2 {
+//                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(40))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(40))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                
+                let section = NSCollectionLayoutSection(group: group)
+//                section.boundarySupplementaryItems = [header]
+                
+                return section
             } else {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -136,6 +155,12 @@ private extension HomeViewController {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TickerCell.identifier, for: indexPath) as? TickerCell else { return UICollectionViewCell() }
                 
                 cell.setupCell(tickerModel: tickerModel)
+                
+                return cell
+            } else if let newsModel = item as? NewsModel {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else { return UICollectionViewCell() }
+                
+                cell.setupCell(newsModel: newsModel)
                 
                 return cell
             } else {
@@ -170,9 +195,11 @@ private extension HomeViewController {
     
     func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, AnyHashable>()
-        snapshot.appendSections([.banner, .ticker])
+        snapshot.appendSections([.banner, .ticker, .news])
+        
         snapshot.appendItems(BannerModel.items, toSection: .banner)
         snapshot.appendItems(TickerModel.items, toSection: .ticker)
+        snapshot.appendItems(NewsModel.items, toSection: .news)
         
         datasource.apply(snapshot, animatingDifferences: true)
     }
