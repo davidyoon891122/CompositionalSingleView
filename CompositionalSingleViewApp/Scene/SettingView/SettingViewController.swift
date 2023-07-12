@@ -20,6 +20,12 @@ final class SettingViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(AccountCell.self, forCellWithReuseIdentifier: AccountCell.identifier)
         
+        collectionView.register(
+            ProductHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: ProductHeaderView.identifier
+        )
+        
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.identifier)
         
         collectionView.backgroundColor = .secondarySystemBackground
@@ -70,11 +76,15 @@ private extension SettingViewController {
                 
                 return section
             } else if sectionIndex == 1 {
-                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(70)))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(70)), subitems: [item])
+                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+                
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(82)), subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
+                
+                section.boundarySupplementaryItems = [header]
                 
                 return section
             } else {
@@ -116,6 +126,19 @@ private extension SettingViewController {
                 return UICollectionViewCell()
             }
         })
+        
+        datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
+            if indexPath.section == 1 {
+                if kind == UICollectionView.elementKindSectionHeader {
+                    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductHeaderView.identifier, for: indexPath) as? ProductHeaderView else { return nil }
+                    
+                    return headerView
+                }
+                return nil
+            } else {
+                return nil
+            }
+        }
         
         applySnapshot()
     }

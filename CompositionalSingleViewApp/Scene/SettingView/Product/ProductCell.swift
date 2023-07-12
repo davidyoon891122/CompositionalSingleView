@@ -21,7 +21,6 @@ final class ProductCell: UICollectionViewCell {
         return imageView
     }()
     
-    // name, price, price value, price percent
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "역삼 위워크"
