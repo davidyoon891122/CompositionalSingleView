@@ -26,6 +26,8 @@ final class ProductHeaderView: UICollectionReusableView {
         
         collectionView.backgroundColor = .secondarySystemBackground
         
+        collectionView.delegate = self
+        
         return collectionView
     }()
     
@@ -66,6 +68,14 @@ final class ProductHeaderView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ProductHeaderView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = MenuModel.items[indexPath.row]
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        changeTitle(toItem: item.menuName)
     }
 }
 
@@ -117,5 +127,21 @@ private extension ProductHeaderView {
         snapshot.appendItems(MenuModel.items)
         
         datasource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func changeTitle(toItem: String) {
+        UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut, animations: {
+            self.titleLabel.text = ""
+            self.titleLabel.alpha = 0
+            UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+                self.titleLabel.text = toItem
+                self.titleLabel.alpha = 1
+            }, completion: { _ in
+                
+            })
+            
+        }, completion: { [weak self] _ in
+            self?.titleLabel.text = toItem
+        })
     }
 }
