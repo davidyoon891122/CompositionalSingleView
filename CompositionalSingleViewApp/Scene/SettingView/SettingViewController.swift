@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 enum SettingSectionType {
     case account
@@ -35,11 +36,22 @@ final class SettingViewController: UIViewController {
     
     private var datasource: UICollectionViewDiffableDataSource<SettingSectionType, AnyHashable>!
     
+    private var viewModel: SettingViewModelType = SettingViewModel()
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private var productData: [ProductModel] = ProductModel.items
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         configureNaivigation()
         configureDatasource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindViewModel()
     }
 }
 
@@ -102,7 +114,8 @@ private extension SettingViewController {
     }
     
     func configureDatasource() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+            guard let self = self else { return UICollectionViewCell() }
             if indexPath.section == 0 {
                 if let _ = item as? AccountModel {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AccountCell.identifier, for: indexPath) as? AccountCell else { return UICollectionViewCell() }
@@ -116,8 +129,11 @@ private extension SettingViewController {
                     return UICollectionViewCell()
                 }
             } else if indexPath.section == 1 {
-                if let _ = item as? ProductModel {
+                if let productModel = item as? ProductModel {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.identifier, for: indexPath) as? ProductCell else { return UICollectionViewCell() }
+                    cell.setViewModel(viewModel: self.viewModel)
+                    
+                    cell.setupCell(product: productModel)
                     return cell
                 } else {
                     return UICollectionViewCell()
@@ -127,11 +143,13 @@ private extension SettingViewController {
             }
         })
         
-        datasource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
+        datasource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) -> UICollectionReusableView? in
+            guard let self = self else { return nil }
             if indexPath.section == 1 {
                 if kind == UICollectionView.elementKindSectionHeader {
                     guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductHeaderView.identifier, for: indexPath) as? ProductHeaderView else { return nil }
                     
+                    headerView.setViewModel(viewModel: self.viewModel)
                     return headerView
                 }
                 return nil
@@ -147,8 +165,20 @@ private extension SettingViewController {
         var snapshot = NSDiffableDataSourceSnapshot<SettingSectionType, AnyHashable>()
         snapshot.appendSections([.account, .product])
         snapshot.appendItems(EmptyAccountModel.item, toSection: .account)
-        snapshot.appendItems(ProductModel.items, toSection: .product)
+        snapshot.appendItems(productData, toSection: .product)
         
         datasource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func bindViewModel() {
+        self.viewModel.outputs.productModelSubject
+            .sink(receiveCompletion: {
+                print("Completed: \($0)")
+            }, receiveValue: { [weak self] productData in
+                guard let self = self else { return }
+                self.productData = productData
+                self.applySnapshot()
+            })
+            .store(in: &subscriptions)
     }
 }

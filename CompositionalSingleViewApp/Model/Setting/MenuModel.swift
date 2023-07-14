@@ -23,3 +23,4 @@ extension MenuModel {
         MenuModel(menuName: "공시지가")
     ]
 }
+

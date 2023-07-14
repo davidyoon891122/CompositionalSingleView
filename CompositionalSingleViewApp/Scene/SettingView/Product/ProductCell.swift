@@ -172,6 +172,8 @@ final class ProductCell: UICollectionViewCell {
         return view
     }()
     
+    private var settingViewModel: SettingViewModelType!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -179,6 +181,17 @@ final class ProductCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupCell(product: ProductModel) {
+        nameLabel.text = product.name
+        pricePercentLabel.text = "\(product.priceValuePercent)%"
+        priceLabel.text = "\(product.price) 원"
+        priceValueLabel.text = "+\(product.priceValue) 원"
+    }
+    
+    func setViewModel(viewModel: SettingViewModelType) {
+        self.settingViewModel = viewModel
     }
 }
 

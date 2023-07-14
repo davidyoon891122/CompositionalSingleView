@@ -59,6 +59,8 @@ final class ProductHeaderView: UICollectionReusableView {
     }()
     
     private var datasource: UICollectionViewDiffableDataSource<Int, MenuModel>!
+    
+    private var viewModel: SettingViewModelType!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,6 +71,10 @@ final class ProductHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setViewModel(viewModel: SettingViewModelType) {
+        self.viewModel = viewModel
+    }
 }
 
 extension ProductHeaderView: UICollectionViewDelegate {
@@ -76,6 +82,8 @@ extension ProductHeaderView: UICollectionViewDelegate {
         let item = MenuModel.items[indexPath.row]
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         changeTitle(toItem: item.menuName)
+        
+        self.viewModel.inputs.requestProductDataByMenu(menu: ProductMenuType(rawValue: item.menuName) ?? .dividend)
     }
 }
 
@@ -136,10 +144,7 @@ private extension ProductHeaderView {
             UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
                 self.titleLabel.text = toItem
                 self.titleLabel.alpha = 1
-            }, completion: { _ in
-                
             })
-            
         }, completion: { [weak self] _ in
             self?.titleLabel.text = toItem
         })
