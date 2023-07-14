@@ -188,6 +188,7 @@ final class ProductCell: UICollectionViewCell {
         pricePercentLabel.text = "\(product.priceValuePercent)%"
         priceLabel.text = "\(product.price) 원"
         priceValueLabel.text = "+\(product.priceValue) 원"
+        productImageView.image = UIImage(named: product.imageName)
     }
     
     func setViewModel(viewModel: SettingViewModelType) {
